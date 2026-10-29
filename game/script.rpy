@@ -38,6 +38,7 @@ image garden_duel = "bg/garden_duel.png"
 image bazarov_room = "bg/bazarov_room.png"
 image church_wedding = "bg/church_wedding.png"
 image cemetery = "bg/cemetery.png"
+image scenaStart = "bg/scenaStart.png"
 
 # ============================================================
 # Спрайты
@@ -113,6 +114,10 @@ transform bg_kb_slow:
         zoom 1.07
         linear 55.0 zoom 1.0
 
+# затемнение под текстом титульной карточки
+transform title_shade:
+    alpha 0.6
+
 # ============================================================
 # ПЕРЕМЕННЫЕ ПРОХОЖДЕНИЯ
 # ============================================================
@@ -139,8 +144,10 @@ label chapter_card(chapter_text, subtitle_text):
 
 label start:
 
-    scene black
+    scene scenaStart at bg_kb_slow
     with fade
+
+    show black at title_shade
 
     centered "{size=74}{b}ОТЦЫ И ДЕТИ{/b}{/size}\n\n{size=30}по роману И. С. Тургенева{/size}\n\n{size=22}игра с выбором · три развязки{/size}"
 
@@ -152,6 +159,8 @@ label start:
 # ============================================================
 label scene_1:
 
+    $ unlock_scene("scene_1")
+
     call chapter_card("ГЛАВА I–II", "Постоялый двор") from _card1
 
     scene theInn at bg_kb
@@ -160,13 +169,13 @@ label scene_1:
     play music "music/waiting_theme.ogg" fadein 1.0 volume 0.9
     play bgs "music/light-breeze.ogg" volume 0.4
 
-    voice "voice/narrator/7de18f9e53aaf682.mp3"
+    $ play_narrator("7de18f9e53aaf682")
     "Май 1859 года. Солнце уже клонится к закату, но всё ещё жжёт пыльную большую дорогу."
-    voice "voice/narrator/08996b264a128420.mp3"
+    $ play_narrator("08996b264a128420")
     "На низком крылечке захудалого постоялого двора стоит мужчина лет сорока с небольшим — Николай Петрович Кирсанов."
-    voice "voice/narrator/2816618f278a6e34.mp3"
+    $ play_narrator("2816618f278a6e34")
     "Запылённое пальто, клетчатые панталоны, усталый взгляд. Ветерок доносит запах тёплого ржаного хлеба из сеней."
-    voice "voice/narrator/d24017af600cd4e2.mp3"
+    $ play_narrator("d24017af600cd4e2")
     "Где-то вдалеке слышится стук колёс. Николай Петрович нервно смотрит вдоль дороги."
 
     show nikolaydef at center_char
@@ -182,7 +191,7 @@ label scene_1:
     voice "voice/petr/0687a5e60199ca6b.mp3"
     petr "Никак нет-с, не видать."
 
-    hide nikolaydef
+    hide petrdef
     show nikolaydef at center_char
     with dissolve
 
@@ -196,7 +205,7 @@ label scene_1:
     voice "voice/petr/7670a124956305bf.mp3"
     petr "Не видать."
 
-    voice "voice/narrator/b788d2b64936bcbf.mp3"
+    $ play_narrator("b788d2b64936bcbf")
     "Проходит ещё верста; лошадь идёт шагом, и каждая минута вытягивается в верёвку."
 
     hide petrdef
@@ -221,7 +230,7 @@ label scene_1:
 
     hide petrdef
 
-    voice "voice/narrator/e7582668031e6eea.mp3"
+    $ play_narrator("e7582668031e6eea")
     "Тарантас подъезжает. Аркадий выпрыгивает. Пыль не успела улететь, а Николай Петрович уже идёт к нему."
 
     show arcardiydef at right_char
@@ -233,7 +242,7 @@ label scene_1:
     show nikolaydef at left_char
     with dissolve
 
-    voice "voice/narrator/3c1da03b12b74b3d.mp3"
+    $ play_narrator("3c1da03b12b74b3d")
     "Аркадий оглядывает отца — и в горле у него что-то сжимается. Он не видел этого человека десять лет."
 
     menu:
@@ -258,7 +267,7 @@ label scene_1:
             arcardy "Папаша, ты меня ждал часов пять, да?"
             voice "voice/nikolay/0cbc091c40977404.mp3"
             nikolay "{i}(смущённо){/i} Да часов около пяти… Я уже начал волноваться."
-            voice "voice/narrator/310aeb94bf3777f9.mp3"
+            $ play_narrator("310aeb94bf3777f9")
             "Николай Петрович отводит глаза, и что-то в его лице на миг становится старым."
 
         "Обнять быстро, почти небрежно — и тут же поймать себя на этом":
@@ -333,10 +342,10 @@ label scene_1:
         "Промолчать и сесть в тарантас":
             $ nihil += 1
             "{i}(Аркадий садится в тарантас первым, не дожидаясь ответа.){/i}"
-            voice "voice/narrator/99a04ed1300e28a8.mp3"
+            $ play_narrator("99a04ed1300e28a8")
             "Николай Петрович ещё раз смотрит на дорогу, точно с чем-то прощается, и только тогда садится рядом."
 
-    voice "voice/narrator/25bb8bf1f688ebf7.mp3"
+    $ play_narrator("25bb8bf1f688ebf7")
     "Оба экипажа катят в Марьино. Аркадий радостно болтает всю дорогу — и всё-таки оглядывается на отца: тот молчит и смотрит в поле."
 
     stop bgs fadeout 1.5
@@ -350,6 +359,8 @@ label scene_1:
 # ============================================================
 label scene_2:
 
+    $ unlock_scene("scene_2")
+
     call chapter_card("ГЛАВА III–IV", "Марьино. Вечер") from _card2
 
     scene maryino_terrace at bg_kb
@@ -357,9 +368,9 @@ label scene_2:
 
     play music "music/light-breeze.ogg" fadein 1.5 volume 0.6
 
-    voice "voice/narrator/5e2b3df650340cb9.mp3"
+    $ play_narrator("5e2b3df650340cb9")
     "Усадьба Марьино. Новый деревянный дом с красной железной крышей. Вечер."
-    voice "voice/narrator/364908ba2b8fc9d0.mp3"
+    $ play_narrator("364908ba2b8fc9d0")
     "На террасе накрыт ужин, пахнет сиренью и свежим сеном. Павел Петрович в идеальном английском костюме медленно прохаживается."
 
     show paveldef at right_char
@@ -385,7 +396,7 @@ label scene_2:
 
     "{i}(низкий поклон, вежливый и холодный){/i}"
 
-    voice "voice/narrator/c42f221ab4a57b4d.mp3"
+    $ play_narrator("c42f221ab4a57b4d")
     "Базаров только что вернулся с болота — грязные сапоги, в руке мешок с лягушками. Атмосфера напряжённая, но пока вежливая."
 
     hide paveldef
@@ -395,7 +406,7 @@ label scene_2:
     show paveldef at right_char
     with dissolve
 
-    voice "voice/narrator/18673f8d08bd53ef.mp3"
+    $ play_narrator("18673f8d08bd53ef")
     "За ужином разговор затягивается."
 
     voice "voice/pavel/a98e12c7e69a2bf7.mp3"
@@ -467,8 +478,8 @@ label scene_2:
             nikolay "Павел… Ну, полно, брат…"
             voice "voice/pavel/42b642f230ea740c.mp3"
             pavel "Довольно. Я по горло нагрузился учтивостью."
-            voice "voice/narrator/5fc43390519ba6d3.mp3"
-            "Ужин кончается втягчивой тишиной. Но Базаров больше не скажет ни слова — и это тоже победа Аркадия."
+            $ play_narrator("2bfd736ce54c60e7")
+            "Ужин кончается вязкой тишиной. Но Базаров больше не скажет ни слова — и это тоже победа Аркадия."
 
         "Поддержать Базарова: «Не мешайте ему, дядюшка»":
             $ nihil += 2
@@ -501,7 +512,7 @@ label scene_2:
             pavel "{i}(сдержанно){/i} Слышу, братец. Хозяйство — дело положительное. Здесь хоть никто не разрушает."
             voice "voice/bazarov/097888ada7e821a8.mp3"
             bazarov "{i}(в сторону, Аркадию, вполголоса){/i} Ну, ты и дипломат. Тебя в министры, а нас — в лакеи."
-            voice "voice/narrator/807a070b212e0814.mp3"
+            $ play_narrator("807a070b212e0814")
             "Ужин доходит до конца. Никто не победил, но и не разбили фарфор."
             hide arcardiydef
             hide nikolaydef
@@ -515,9 +526,9 @@ label scene_2:
     scene maryino_room at bg_kb
     with fade
 
-    play music "music/waiting_theme.ogg" fadein 1.0 volume 0.4
+    play music "music/waiting_theme.ogg" fadeout 1.2 fadein 1.0 volume 0.4
 
-    voice "voice/narrator/e673822068163422.mp3"
+    $ play_narrator("e673822068163422")
     "Ночью, в комнате Аркадия. Свеча догорает."
 
     show bazarovdef at left_char
@@ -553,7 +564,7 @@ label scene_2:
     bazarov "{i}(встаёт){/i} Ну, голубчик, это не моё дело. Я пойду светиться: лягушку надо выпотрошить, а у тебя тут…"
     "{i}(он оглядывает комнату и не договаривает){/i}"
 
-    voice "voice/narrator/19c653b288749935.mp3"
+    $ play_narrator("19c653b288749935")
     "Базаров уходит. Дверь хлопает; в комнате становится тихо."
 
     stop music fadeout 2.0
@@ -566,6 +577,8 @@ label scene_2:
 # ============================================================
 label scene_2b:
 
+    $ unlock_scene("scene_2b")
+
     call chapter_card("ГЛАВА V", "История одного брата") from _card2b
 
     scene maryino_room at bg_kb_slow
@@ -573,7 +586,7 @@ label scene_2b:
 
     play music "music/waiting_theme.ogg" fadein 2.0 volume 0.35
 
-    voice "voice/narrator/70cab59db44c76ed.mp3"
+    $ play_narrator("70cab59db44c76ed")
     "Две ночи спустя. Аркадий не спит, и в его комнату заходит Николай Петрович."
 
     show nikolaydef at left_char
@@ -617,7 +630,7 @@ label scene_2b:
             voice "voice/arcardy/59cfcf7960483e35.mp3"
             arcardy "Бедный дядюшка… И бедный ты, папаша: ты-то всё это помнишь и всё это носишь."
             "{i}(Николай Петрович вскакивает, хочет сказать что-нибудь остроумное, не находит, обнимает сына и уходит молча.){/i}"
-            voice "voice/narrator/10a4cc24d90e2388.mp3"
+            $ play_narrator("10a4cc24d90e2388")
             "На пороге он всё-таки останавливается."
             voice "voice/nikolay/4948544053ce9843.mp3"
             nikolay "{i}(тихо){/i} И запомни: никому из них. Ни Базарову, ни Павлу. Он не простит."
@@ -640,7 +653,7 @@ label scene_2b:
 
     "{i}(Аркадий ещё долго лежит без свечи. Внизу, в кабинете Павла Петровича, тоже горит огонь.){/i}"
 
-    voice "voice/narrator/cc237aac5cf1a4f9.mp3"
+    $ play_narrator("cc237aac5cf1a4f9")
     "Рассказ о человеке, который двадцать два года носит в кармане чужое письмо и не перечитывает его, переменяет в Аркадии что-то, чего он ещё не умеет назвать."
 
     stop music fadeout 2.5
@@ -653,6 +666,8 @@ label scene_2b:
 # ============================================================
 label scene_3:
 
+    $ unlock_scene("scene_3")
+
     call chapter_card("ГЛАВА VI–VIII", "Утро в Марьине") from _card3
 
     scene maryino_morning at bg_kb
@@ -660,9 +675,9 @@ label scene_3:
 
     play music "music/light-breeze.ogg" fadein 1.5 volume 0.5
 
-    voice "voice/narrator/b6437cb0742f60a9.mp3"
+    $ play_narrator("b6437cb0742f60a9")
     "Утро. Терраса залита мягким солнечным светом. На столе самовар, большие букеты сирени."
-    voice "voice/narrator/0b9f3ab9b1e13b8e.mp3"
+    $ play_narrator("0b9f3ab9b1e13b8e")
     "Николай Петрович нервно разливает чай. Из боковой комнаты доносится тихий детский лепет. Фенечка не выходит — она стесняется."
 
     show nikolaydef at right_char
@@ -695,7 +710,7 @@ label scene_3:
         "Идти самому и привести Фенечку к столу":
             $ mercy += 1
             $ kinship += 1
-            voice "voice/narrator/872c12482ce6c934.mp3"
+            $ play_narrator("872c12482ce6c934")
             "Аркадий встаёт, идёт через гостиную и стучит в боковую дверь. Ему отвечают не сразу — и он возвращается не один."
             "{i}(Фенечка входит в лёгком летнем платье, с опущенными глазами, и садится у стола так тихо, точно её и нет.){/i}"
             voice "voice/fedosiya/7594ea10db62656f.mp3"
@@ -721,7 +736,7 @@ label scene_3:
     hide arcardiydef
     hide nikolaydef
 
-    voice "voice/narrator/0c4c7adc73aec51b.mp3"
+    $ play_narrator("0c4c7adc73aec51b")
     "Час спустя Аркадий возвращается сияющий."
 
     show nikolaydef at right_char
@@ -738,7 +753,7 @@ label scene_3:
     voice "voice/nikolay/42fb0ac9a2b66e7c.mp3"
     nikolay "Аркадий…"
 
-    voice "voice/narrator/d0c20b8799212fac.mp3"
+    $ play_narrator("d0c20b8799212fac")
     "Митя, услышав новые голоса, выбегает на террасу и тянет руки к сирени."
 
     voice "voice/mitya/3f43340fae833fa2.mp3"
@@ -750,7 +765,7 @@ label scene_3:
     hide arcardiydef
     hide nikolaydef
 
-    voice "voice/narrator/07f86d00fd8df898.mp3"
+    $ play_narrator("07f86d00fd8df898")
     "Позже Павел Петрович заходит к Фенечке."
 
     show paveldef at left_char
@@ -786,7 +801,7 @@ label scene_3:
     voice "voice/dunyasha/63c493a144a0c3d3.mp3"
     dunyasha "{i}(из-за двери){/i} Сейчас-с, Павел Петрович. Только его укачивать надо, он не спал ночь."
 
-    voice "voice/narrator/81fe1a38afb84bb5.mp3"
+    $ play_narrator("81fe1a38afb84bb5")
     "Фенечка передаёт ребёнка. Павел Петрович щекочет подбородок Мити длинным ногтем."
 
     voice "voice/pavel/434c8161a90ec438.mp3"
@@ -806,7 +821,7 @@ label scene_3:
     show nikolaydef at side_char
     with dissolve
 
-    voice "voice/narrator/daceb57729289e7a.mp3"
+    $ play_narrator("daceb57729289e7a")
     "В дверях появляется Николай Петрович и видит эту сцену."
 
     "{i}(Братья смотрят друг на друга через комнату, через ребёнка, через Фенечку — и оба понимают всё без единого слова.){/i}"
@@ -843,7 +858,7 @@ label scene_3:
     hide arcardiydef
     with dissolve
 
-    voice "voice/narrator/63226a50f5b9ad9c.mp3"
+    $ play_narrator("63226a50f5b9ad9c")
     "Вечером к террасе подъезжает коляска: из города приехали Лиза, свояченица Анны Сергеевны, и её младшая сестра Катя."
 
     show catyadef at side_right_char
@@ -873,7 +888,7 @@ label scene_3:
             arcardy "Вы нас удивили, Лизавета Николаевна. Мы ждали вас только к обеду."
             voice "voice/catya/76fbe8623526be71.mp3"
             catya "{i}(тихо сестре){/i} Он говорит, как в театре."
-            voice "voice/narrator/9ade67ded2c865be.mp3"
+            $ play_narrator("9ade67ded2c865be")
             "Лиза смеётся во всё горло, а Катя не смеётся и смотрит в воду."
 
     hide catyadef
@@ -889,6 +904,8 @@ label scene_3:
 # ============================================================
 label scene_4:
 
+    $ unlock_scene("scene_4")
+
     call chapter_card("ГЛАВА IX–XI", "Молодые люди") from _card4
 
     scene maryino_terrace at bg_kb
@@ -896,7 +913,7 @@ label scene_4:
 
     play music "music/light-breeze.ogg" fadein 1.0 volume 0.5
 
-    voice "voice/narrator/fbf264049611eb9f.mp3"
+    $ play_narrator("fbf264049611eb9f")
     "Июнь. К крыльцу Марьина подкатывает фаэтон, в котором сидят два неизвестных."
 
     show bazarovdef at left_char
@@ -904,7 +921,7 @@ label scene_4:
     show arcardiydef at right_char
     with dissolve
 
-    voice "voice/narrator/0f8116f94738aae0.mp3"
+    $ play_narrator("0f8116f94738aae0")
     "Из фаэтона вылезает худощавый молодой человек в летнем пальто на четырёх пуговицах, в клетчатых брючках и круглой шляпе; за ним — коренастый, рыжий, молчаливый."
 
     voice "voice/smit/b87b853de04b3422.mp3"
@@ -916,7 +933,7 @@ label scene_4:
     voice "voice/bazarov/f955a48fdc9a70ba.mp3"
     bazarov "{i}(Аркадию, вполголоса){/i} Это Ситников. Он ездит ко мне учиться. Он будет нашим последователем, как все они."
 
-    voice "voice/narrator/60da7eca5a8af706.mp3"
+    $ play_narrator("60da7eca5a8af706")
     "Козьин вынимает из фаэтона скрипку и, ничего не отвечая на вопросы, начинает играть — вальс, потом польку, потом что-то, чего никто не знает."
 
     voice "voice/smit/5927aabc1ef2e320.mp3"
@@ -956,7 +973,7 @@ label scene_4:
     hide arcardiydef
     with dissolve
 
-    voice "voice/narrator/56e119f16271e350.mp3"
+    $ play_narrator("56e119f16271e350")
     "Ситников и Козьин уезжают к пяти часам: Ситникову надо поспеть к невесте, у которой, по его выражению, «положительные» понятия о браке."
 
     stop music fadeout 2.0
@@ -968,9 +985,9 @@ label scene_4:
 
     play music "music/waiting_theme.ogg" fadein 2.0 volume 0.7
 
-    voice "voice/narrator/289a40fa6ae8192e.mp3"
+    $ play_narrator("289a40fa6ae8192e")
     "Губернский бал. Яркие огни, музыка, кружащиеся пары."
-    voice "voice/narrator/cbddf686fce4fd7f.mp3"
+    $ play_narrator("cbddf686fce4fd7f")
     "Анна Сергеевна Одинцова стоит в центре зала — высокая, спокойная, в строгом платье. Её взгляд холоден и притягателен одновременно."
 
     show annadef at right_char
@@ -990,7 +1007,7 @@ label scene_4:
             arcardy "Он приедет. Только он… он не умеет на балах. Он умеет говорить, и то не всегда вовремя."
             voice "voice/anna/b19f9644021e4bb8.mp3"
             anna "{i}(улыбается){/i} Мне это не мешает. Мне мешает только скука. А он не скучен."
-            voice "voice/narrator/7a81184c6836edf1.mp3"
+            $ play_narrator("7a81184c6836edf1")
             "Анна Сергеевна смотрит поверх головы Аркадия на Базарова — и Базаров впервые на бале не отводит глаза."
         "Сказать прямо: «Он вас разлюбит, если вы будете с ним ласковы»":
             $ anna_open += 1
@@ -1005,7 +1022,7 @@ label scene_4:
             anna "{i}(чуть заметно){/i} Тогда я запомню. Но я никого не боюсь, кроме дурной музыки. А её, кажется, сейчас кончают."
         "Оттанцевать мазурку с Катей и не смотреть на Одинцову":
             $ kinship += 2
-            voice "voice/narrator/18019fd02e4ab51d.mp3"
+            $ play_narrator("18019fd02e4ab51d")
             "Аркадий приглашает Катю. Они не говорят ни о чём; музыка кончается слишком скоро."
             voice "voice/catya/5c04fc629562663f.mp3"
             catya "{i}(уходя с круга){/i} Вы сегодня не похожи на себя. У вас не то лицо, что в Марьине."
@@ -1018,7 +1035,7 @@ label scene_4:
     hide annadef
     hide bazarovdef
 
-    voice "voice/narrator/5bbc16f8d22b5827.mp3"
+    $ play_narrator("5bbc16f8d22b5827")
     "На другой день Базаров едет один в Никольское — за грибами, за разговором, за тем, чего не умеет назвать."
 
     call chapter_card("ГЛАВА XVI–XVII", "Никольское") from _card4c
@@ -1029,7 +1046,7 @@ label scene_4:
     stop music fadeout 1.5
     play music "music/light-breeze.ogg" fadein 1.5 volume 0.45
 
-    voice "voice/narrator/fe7ea4ce61ffd4a3.mp3"
+    $ play_narrator("fe7ea4ce61ffd4a3")
     "Никольское. Вечер в гостиной. Свечи, тишина, запах духов и старых книг."
 
     show annadef at right_char
@@ -1061,14 +1078,14 @@ label scene_4:
     voice "voice/anna/46f2c69401758bb5.mp3"
     anna "{i}(не отводя глаз){/i} Вы всегда так говорите — или только когда вам смешно?"
 
-    voice "voice/narrator/06e7c2a81fdd0f41.mp3"
+    $ play_narrator("06e7c2a81fdd0f41")
     "Долгий разговор о науке и жизни. За окнами темнеет. Базаров говорит всё резче, словно злится на самого себя."
 
     if anna_open >= 2:
-        voice "voice/narrator/25d5d8c87c419e21.mp3"
+        $ play_narrator("25d5d8c87c419e21")
         "Анна Сергеевна внимательна. Она подаёт ему слово за словом, и он подхватывает их — как человек, который идёт по реке и не хочет заметить, что течение уже сильное."
     else:
-        voice "voice/narrator/8ee4672f7314ef9b.mp3"
+        $ play_narrator("8ee4672f7314ef9b")
         "Анна Сергеевна отвечает холодно и коротко. Базаров злится, и злость раззадоривает его ещё больше."
 
     menu:
@@ -1092,7 +1109,7 @@ label scene_4:
             bazarov "{i}(тоже встаёт){/i} Тогда я уеду. И не приеду. Это будет, как если б я ничего не говорил."
             voice "voice/anna/eb3b9f73f8cfa161.mp3"
             anna "{i}(тихо){/i} Нет. Скажите, что вы не ехали в Никольское за грибами."
-            voice "voice/narrator/33d884fcc10486c2.mp3"
+            $ play_narrator("33d884fcc10486c2")
             "Оба замолкают. Где-то в соседней комнате тихо перебирают клавиши."
         "Остановиться на полуслове и перевести на шутку":
             voice "voice/bazarov/2ce709185e75aae0.mp3"
@@ -1111,7 +1128,7 @@ label scene_4:
     hide annadef
     hide bazarovdef
 
-    voice "voice/narrator/190e261568a39568.mp3"
+    $ play_narrator("190e261568a39568")
     "На следующий день, перед отъездом."
 
     show bazarovdef at left_char
@@ -1134,7 +1151,7 @@ label scene_4:
         voice "voice/bazarov/98ad387e56ddc432.mp3"
         bazarov "{i}(резко){/i} Довольно, Аркадий. Разговор окончен. Запомни одно: не играй с огнём, если у тебя карман бумажный."
 
-    voice "voice/narrator/34d3c46c106cb89e.mp3"
+    $ play_narrator("34d3c46c106cb89e")
     "Базаров и Аркадий возвращаются в Марьино. Всю дорогу Базаров угрюмо молчит."
 
     stop music fadeout 2.0
@@ -1147,6 +1164,8 @@ label scene_4:
 # ============================================================
 label scene_5:
 
+    $ unlock_scene("scene_5")
+
     call chapter_card("ГЛАВА XVIII–XIX", "Ночь перед рассветом") from _card5
 
     scene maryino_room at bg_kb_slow
@@ -1154,7 +1173,7 @@ label scene_5:
 
     play music "music/waiting_theme.ogg" fadein 1.5 volume 0.5
 
-    voice "voice/narrator/ff004df49928196d.mp3"
+    $ play_narrator("ff004df49928196d")
     "Ночь. В кабинете Павла Петровича горит лампа. Он сидит, не раздеваясь, с бумагой в руке."
 
     show paveldef at center_char
@@ -1170,7 +1189,7 @@ label scene_5:
 
     hide paveldef
 
-    voice "voice/narrator/d3bc3df547345ce6.mp3"
+    $ play_narrator("d3bc3df547345ce6")
     "Утром Аркадий находит записку. Он знает, чья рука, и знает, что прочтёт её тот, кому она не послана."
 
     menu:
@@ -1224,7 +1243,7 @@ label scene_5:
             "{i}(Аркадий понимает и молчит.){/i}"
             hide bazarovdef
         "Не трогать письмо и выйти в сад":
-            voice "voice/narrator/2e9ef08fd1fcf946.mp3"
+            $ play_narrator("2e9ef08fd1fcf946")
             "Аркадий кладёт бумагу ровно так, как нашёл, и уходит. Он говорит себе, что это не его дело, что они взрослые, что всё кончится вздором."
             "{i}(За окном ещё темно, и в темноте он слышит, как по кабинету Павла Петровича кто-то ходит туда и обратно, не останавливаясь, — очень долго.){/i}"
 
@@ -1246,11 +1265,11 @@ label scene_5_duel:
     play sound "sounds/tree-creak.ogg"
     play music "music/waiting_theme.ogg" fadein 1.0 volume 0.9
 
-    voice "voice/narrator/092917f245cfeb20.mp3"
+    $ play_narrator("092917f245cfeb20")
     "Сад Марьино. Раннее утро. Туман ещё не рассеялся."
-    voice "voice/narrator/8336d9b0a0201fa8.mp3"
+    $ play_narrator("8336d9b0a0201fa8")
     "Павел Петрович стоит с пистолетом в руке — идеальная осанка, холодный взгляд. Базаров напротив, в старом пальто."
-    voice "voice/narrator/7b359f87a3954d7a.mp3"
+    $ play_narrator("7b359f87a3954d7a")
     "Где-то поют птицы, но звук кажется насмешкой."
 
     show paveldef at right_char
@@ -1270,7 +1289,7 @@ label scene_5_duel:
     voice "voice/bazarov/88931af944bd6d1b.mp3"
     bazarov "Я не собираюсь оставаться. Но если вы настаиваете… давайте покончим с этим."
 
-    voice "voice/narrator/1b48e563f94cb0c3.mp3"
+    $ play_narrator("1b48e563f94cb0c3")
     "Секунданты отводят три шага. Листья лежат на траве и не шевелятся."
 
     menu:
@@ -1278,7 +1297,7 @@ label scene_5_duel:
             $ mercy += 2
             "{i}(Аркадий бросается вперёд, между дулами, и в этот момент кто-то даёт промах, а кто-то — нет.){/i}"
             play sound "sounds/the-dry-cry-of-a-raven-and-incomprehensible-exclamations.ogg"
-            voice "voice/narrator/1452c85038120e61.mp3"
+            $ play_narrator("1452c85038120e61")
             "Грохот. Дым. Павел Петрович пошатывается и медленно опускается на траву; пуля задела ногу, ниже колена."
             voice "voice/bazarov/65e7d866ef1f6045.mp3"
             bazarov "{i}(бросает пистолет, бледный){/i} Аркадий! Ты идиот, ты мог попасть под обе. Ну вот, и стреляли из-за твоего великодушия."
@@ -1289,7 +1308,7 @@ label scene_5_duel:
         "Не двинуться и смотреть, как всё исполняется по правилам":
             "{i}(Аркадий стоит, засунув руки в карманы, как велено: он учится быть свидетелем.){/i}"
             play sound "sounds/the-dry-cry-of-a-raven-and-incomprehensible-exclamations.ogg"
-            voice "voice/narrator/7e550206aaf12535.mp3"
+            $ play_narrator("7e550206aaf12535")
             "Грохот. Павел Петрович пошатывается, потом медленно опускается на траву. Пуля задела ногу."
             voice "voice/bazarov/e2cec01d70175553.mp3"
             bazarov "{i}(не двигаясь){/i} Ваша очередь кончена. Моя — тоже. Можно разойтись и не быть друг другу врагами."
@@ -1297,12 +1316,12 @@ label scene_5_duel:
             $ nihil += 1
             "{i}(Аркадий отворачивается и идёт к дому, быстро, почти бегом.){/i}"
             play sound "sounds/the-dry-cry-of-a-raven-and-incomprehensible-exclamations.ogg"
-            voice "voice/narrator/33497173b4676da8.mp3"
+            $ play_narrator("33497173b4676da8")
             "Выстрел настигает его на полпути, и он останавливается: идти дальше уже нельзя."
             voice "voice/arcardy/0aeaf2aa3d1d3a25.mp3"
             arcardy "{i}(про себя){/i} Я струсил. Я, кажется, впервые в жизни струсил — и не за что себя обвинить, и нечем оправдать."
 
-    voice "voice/narrator/df1194a8f6911fe0.mp3"
+    $ play_narrator("df1194a8f6911fe0")
     "Базаров бросается к раненому, перевязывает рану. Лицо у него бледное и злое."
 
     show paveldef at right_char
@@ -1330,7 +1349,7 @@ label scene_5_duel:
     hide arcardiydef
     with dissolve
 
-    voice "voice/narrator/04351ee16a9bc0c4.mp3"
+    $ play_narrator("04351ee16a9bc0c4")
     "Вечером. Приезжает пристав; за ним — слёзы, письма, угрозы участок покинуть. Николай Петрович уговаривает Базарова уехать."
 
     show nikolaydef at left_char
@@ -1360,17 +1379,18 @@ label scene_5_duel:
 # ============================================================
 label scene_5b:
 
+    $ unlock_scene("scene_5b")
+
     call chapter_card("ГЛАВА XXV–XXVI", "Васильевка. Дом Базаровых") from _card5c
 
     scene bazarov_room at bg_kb_slow
     with fade
 
     play music "music/light-breeze.ogg" fadein 2.0 volume 0.45
-    play bgs "music/light-breeze.ogg" volume 0.2
 
-    voice "voice/narrator/3e025a1dffd91d4b.mp3"
+    $ play_narrator("3e025a1dffd91d4b")
     "Небольшой домик в Васильевке. Места вёрст на сорок вокруг — и всё его. Забор, две яблони, баня, колодец с журавлём."
-    voice "voice/narrator/6449273672e93a06.mp3"
+    $ play_narrator("6449273672e93a06")
     "Вечер. Арина Власьевна всё ходит по комнатке и всё переставляет. Василий Иванович в старом сюртуке, с подвязанным платком."
 
     show vasiliydef at left_char
@@ -1442,7 +1462,7 @@ label scene_5b:
     hide arinadef
     with dissolve
 
-    voice "voice/narrator/6462f17b5bc2af90.mp3"
+    $ play_narrator("6462f17b5bc2af90")
     "Ночь. В чулане, где он жил мальчиком, Базаров не спит. За стеной отец и мать шепчутся, чтобы он не услыхал, — и услыхать нельзя только одного: о чём они говорят так тихо."
 
     show bazarovdef at center_char
@@ -1464,7 +1484,7 @@ label scene_5b:
             $ mercy += 1
             show arcardiydef at right_char
             with dissolve
-            voice "voice/narrator/07cc1dd26aa672d8.mp3"
+            $ play_narrator("07cc1dd26aa672d8")
             "Через неделю Аркадий в Васильевке. Они ходят по берегу, ловят раков, и Базаров говорит только о науке — как будто лечится."
             voice "voice/bazarov/b9f40f893183ff37.mp3"
             bazarov "{i}(не глядя){/i} Ты заметил: я стал учтив. Это оттого, что мне некуда деть злость. Ты приехал — и у меня её меньше на треть. Пиши чаще."
@@ -1473,7 +1493,7 @@ label scene_5b:
             hide arcardiydef
         "Написать Одинцовой и попросить свидания":
             $ anna_open += 2
-            voice "voice/narrator/cae1d958e02c4cae.mp3"
+            $ play_narrator("cae1d958e02c4cae")
             "Базаров пишет письмо в одну строку и сам относит его на почту. Он не ждёт ответа и получает его раньше, чем ждал кто-нибудь в этом уезде."
             voice "voice/anna/c168d53990b3b33b.mp3"
             anna "{i}(в ответной записке){/i} «Вы были резки; я не умею держать на вас. Но я не умею и не отвечать. Приезжайте; я жду, и мне скучно без вас»."
@@ -1481,12 +1501,12 @@ label scene_5b:
             bazarov "{i}(читает дважды и смеётся; смех выходит не весёлый){/i} «Мне скучно без вас». Это, брат, уже не спокойствие. Это, брат, обещание."
         "Не писать никому":
             $ nihil += 1
-            voice "voice/narrator/d3d819382cb54e3b.mp3"
+            $ play_narrator("d3d819382cb54e3b")
             "Проходят три недели. Базаров ездит по уезду по мелким нуждам, лечит за гроши, дерёт с мужиками коросту; у него вырывают зуб у помещика, вправляют руку солдату и зовут его «чёрт». Он не пишет ни слова."
 
     hide bazarovdef
 
-    voice "voice/narrator/d6194e4f2b109f16.mp3"
+    $ play_narrator("d6194e4f2b109f16")
     "Осенью приносят известие: в соседней деревне померли от скорбного тифа, и фельдшер прислал записку — пусть кто-нибудь приедет вскрыть."
 
     show bazarovdef at left_char
@@ -1519,6 +1539,8 @@ label scene_5b:
 # ============================================================
 label scene_6:
 
+    $ unlock_scene("scene_6")
+
     call chapter_card("ГЛАВА XXVII", "Скорбный тиф") from _card6
 
     scene bazarov_room at bg_kb_slow
@@ -1527,11 +1549,11 @@ label scene_6:
     play music "music/waiting_theme.ogg" fadein 2.0 volume 0.4
     play bgs "music/light-breeze.ogg" volume 0.15
 
-    voice "voice/narrator/0517dce3840377f4.mp3"
+    $ play_narrator("0517dce3840377f4")
     "Маленький домик родителей Базарова. Тёмная комната, тяжёлый воздух."
-    voice "voice/narrator/c43f1b69e9b756b4.mp3"
+    $ play_narrator("c43f1b69e9b756b4")
     "Базаров лежит на кровати — бледный, потный, глаза горят лихорадкой. За окном — тихий дождь."
-    voice "voice/narrator/6042c63945b6861c.mp3"
+    $ play_narrator("6042c63945b6861c")
     "Он заразился тифом, вскрывая труп крестьянина. Прошло шесть дней с того вечера, когда он показал матери красную точку царапины на пальце."
 
     "{i}(Приезжий доктор из города осмотрел его четверть часа назад и теперь ходит у окна, подбирая слово.){/i}"
@@ -1596,14 +1618,14 @@ label scene_6:
 
     hide annadef
 
-    voice "voice/narrator/7f0aab06d06dc3b3.mp3"
+    $ play_narrator("7f0aab06d06dc3b3")
     "Арина Власьевна входит с компрессом и не выходит из комнаты больше ни разу за весь день."
 
+    show bazarovdef at center_ghost
+    with dissolve
     show vasiliydef at left_char
     with dissolve
     show arinadef at right_char
-    with dissolve
-    show bazarovdef at center_ghost
     with dissolve
 
     "{i}(Базаров долго молчит, потом начинает говорить — тихо, но твёрдо.){/i}"
@@ -1671,7 +1693,7 @@ label scene_6:
     hide bazarovdef
     with dissolve
 
-    voice "voice/narrator/9623a374c6b45e70.mp3"
+    $ play_narrator("9623a374c6b45e70")
     "Прошло три дня."
 
     stop bgs fadeout 2.0
@@ -1695,9 +1717,9 @@ label scene_6b:
     play music "music/waiting_theme.ogg" fadein 2.0 volume 0.3
     play sound "sounds/the-dry-cry-of-a-raven-and-incomprehensible-exclamations.ogg"
 
-    voice "voice/narrator/6cb2c60ae9f0f127.mp3"
+    $ play_narrator("6cb2c60ae9f0f127")
     "Дождь. Небольшое сельское кладбище у подошвы горы, между двумя вековыми елями, — как он сам велел."
-    voice "voice/narrator/04a59c8800e3629d.mp3"
+    $ play_narrator("04a59c8800e3629d")
     "Певчих мало: за гробом идут три человека да солдат, который служил в барской избе. Могила старая, заброшенная; камня на плиту не нашлось."
 
     show arinadef at left_char
@@ -1720,7 +1742,7 @@ label scene_6b:
     hide vasiliydef
     with dissolve
 
-    voice "voice/narrator/56a434c95d4a96af.mp3"
+    $ play_narrator("56a434c95d4a96af")
     "Две недели спустя Арина Власьевна начинает носить ему обед на кладбище и ставить его на могиле; Василий Иванович не мешает ей, а сам после этого долго сидит у окна с незажжённой трубкой."
 
     stop music fadeout 2.5
@@ -1733,6 +1755,8 @@ label scene_6b:
 # ============================================================
 label scene_7:
 
+    $ unlock_scene("scene_7")
+
     call chapter_card("ЭПИЛОГ · 1", "Свадьбы") from _card7
 
     scene church_wedding at bg_kb
@@ -1740,9 +1764,9 @@ label scene_7:
 
     play music "music/light-breeze.ogg" fadein 2.0 volume 0.7
 
-    voice "voice/narrator/50ffd86797fc5638.mp3"
+    $ play_narrator("50ffd86797fc5638")
     "Церковь в Марьино. Яркий солнечный день. Звенят колокола."
-    voice "voice/narrator/6efaa07805ccb5d6.mp3"
+    $ play_narrator("6efaa07805ccb5d6")
     "Аркадий в новом фраке держит руку Кати. Рядом — Николай Петрович и Фенечка, оба сияют тихим счастьем. Павел Петрович стоит в стороне, улыбаясь."
 
     show arcardiydef at left_char
@@ -1786,7 +1810,7 @@ label scene_7:
     hide nikolaydef
     hide fedosiyadef
 
-    voice "voice/narrator/7d322c760bcfd2f7.mp3"
+    $ play_narrator("7d322c760bcfd2f7")
     "За оградой церкви Ситников — уже женатый на Курлесевой и печатающий в журнале — разглагольствует о правах женщины; Лиза выходит замуж за мелкого поэта; никто из них не вспоминает Базарова, кроме Кати, которая однажды переспросила: «А где же Евгений Васильевич?»"
 
     show paveldef at left_char
@@ -1817,13 +1841,13 @@ label scene_7:
     menu:
         "Остаться в Марьине: хозяйство, трое детей, тихая жизнь":
             $ kinship += 2
-            voice "voice/narrator/36e81eba15ae1e31.mp3"
+            $ play_narrator("36e81eba15ae1e31")
             "Аркадий остаётся. В пшенице он разбирается быстрее, чем в философии, и оказывается, что нигилиста в нём не было — был помещик с хорошим сердцем."
             "{i}(На его столе лежит портрет Базарова, и никто из гостей не знает, кто этот человек с резким лицом.){/i}"
         "Уехать с Катей в город: служить, печатать, быть нужным делу":
             $ nihil += 1
             $ kinship += 1
-            voice "voice/narrator/fd959e3ee8457963.mp3"
+            $ play_narrator("fd959e3ee8457963")
             "Аркадий уезжает. Служба идёт скверно, потом отлично; печатать он так и не начинает, но заводит привычку читать про себя всё печатное и находить в нём смысл."
             "{i}(Катя говорит, что он стал добрее; он говорит, что стал полезнее; и оба остаются при своём мнении.){/i}"
 
@@ -1839,6 +1863,8 @@ label scene_7:
 # ============================================================
 label scene_8:
 
+    $ unlock_scene("scene_8")
+
     call chapter_card("ЭПИЛОГ · 2", "Могила") from _card8
 
     scene cemetery at bg_kb
@@ -1848,9 +1874,9 @@ label scene_8:
     play music "music/waiting_theme.ogg" fadein 3.0 volume 0.3
     play sound "sounds/the-dry-cry-of-a-raven-and-incomprehensible-exclamations.ogg"
 
-    voice "voice/narrator/2baf0a9386f6041c.mp3"
+    $ play_narrator("2baf0a9386f6041c")
     "Сельское кладбище. Тихий летний вечер. На скромной могиле Базарова — свежие цветы."
-    voice "voice/narrator/11f4ea04da0ad197.mp3"
+    $ play_narrator("11f4ea04da0ad197")
     "Два старика — Василий Иванович и Арина Власьевна — стоят на коленях. Ветер шелестит листьями."
 
     show vasiliydef at left_char
@@ -1912,38 +1938,38 @@ label ending_life:
     hide arinadef
     with dissolve
 
-    voice "voice/narrator/80017ead0da3f7b6.mp3"
+    $ play_narrator("80017ead0da3f7b6")
     "Прошло ещё несколько лет."
 
-    voice "voice/narrator/be2baf11508d30ea.mp3"
-    "Аркадий и Катя живут в Марьине; у них трое детей, и Катя не изменилась ни на слово — она помнит и то, другим."
-    voice "voice/narrator/10c1386f11ae3b50.mp3"
+    $ play_narrator("b4931c0bbaabf5e6")
+    "Аркадий и Катя живут в Марьине; у них трое детей, и Катя не изменилась ни на слово — она помнит и то, что забыли другие."
+    $ play_narrator("10c1386f11ae3b50")
     "Николай Петрович кончает хозяйствовать и начинает переводить; Фенечка держит весь дом и смеётся громче всех."
 
     if saw_last_hours:
-        voice "voice/narrator/5f2718b22d9b6775.mp3"
+        $ play_narrator("5f2718b22d9b6775")
         "Аркадий до конца своих дней не может слышать слова «скорбный тиф» — и всегда приезжал в Васильевку, когда его звали, и ни разу не опоздал."
     else:
-        voice "voice/narrator/05f34d5de0e692ea.mp3"
+        $ play_narrator("05f34d5de0e692ea")
         "Аркадий до конца дней жалеет об одном: что не приехал в Васильевку раньше, чем его позвали, — и не приехал тогда, когда не позвали."
 
     if duel_warned:
-        voice "voice/narrator/0a26136e8ed50743.mp3"
+        $ play_narrator("0a26136e8ed50743")
         "У Николая Петровича в ящике лежит письмо, которое он так и не показал Базарову. Он часто берёт его в руки и не открывает."
 
     if pavel_history:
-        voice "voice/narrator/eefadda1ba05c5ef.mp3"
+        $ play_narrator("eefadda1ba05c5ef")
         "Павел Петрович живёт в Дрездене. Он всё-таки раз в год перечитывает своё прежнее письмо и пишет брату — коротко, о картинах, но пишет."
     else:
-        voice "voice/narrator/8596b3303efa757d.mp3"
+        $ play_narrator("8596b3303efa757d")
         "Павел Петрович живёт в Дрездене и пишет родным раз в год, коротко, о картинах."
 
-    voice "voice/narrator/a351f1cf2cf347db.mp3"
+    $ play_narrator("a351f1cf2cf347db")
     "А на могиле Базарова… только цветы и два старика, которые приходят каждый день."
-    voice "voice/narrator/409083735850ddfc.mp3"
+    $ play_narrator("409083735850ddfc")
     "Не то, что он любил, осталось после него; осталось то, чего он не захотел: живая жизнь, которая сама разбирается со всем — без него и против него, и всё-таки по его дороге."
 
-    voice "voice/narrator/19ac983aa551f9ad.mp3"
+    $ play_narrator("19ac983aa551f9ad")
     "И жизнь продолжается."
 
     jump finale_card
@@ -1962,7 +1988,7 @@ label ending_odtsova:
     show annadef at center_char
     with dissolve
 
-    voice "voice/narrator/ee7175e1aa5be43d.mp3"
+    $ play_narrator("ee7175e1aa5be43d")
     "Никольское. Поздний вечер. Анна Сергеевна одна в той же гостиной, где он сидел напротив, подвинув стул ближе, чем надо."
 
     voice "voice/anna/c21781528aa89fd6.mp3"
@@ -2001,13 +2027,13 @@ label ending_odtsova:
     hide arinadef
     with dissolve
 
-    voice "voice/narrator/4422b7229a505638.mp3"
+    $ play_narrator("4422b7229a505638")
     "Анна Сергеевна живёт с мужем статским советником, человеком добрым и рассудительным, и всю жизнь хранит в столе его записку в одну строку: «приезжайте; я жду, и мне скучно без вас»."
-    voice "voice/narrator/97cf566215f279f1.mp3"
+    $ play_narrator("97cf566215f279f1")
     "Она приезжает к этой могиле раз в несколько лет и всегда одна; молиться она не умеет, но стоит долго."
 
     if mercy >= 4:
-        voice "voice/narrator/ccbe7d7fc5816199.mp3"
+        $ play_narrator("ccbe7d7fc5816199")
         "А старикам она каждый раз оставляет деньги на цветы и ни разу не называет своего имени — и они оба, не зная её, привыкают к этой даме в тёмной шляпе и ставят для неё стул у колодца."
 
     jump finale_card
@@ -2024,7 +2050,7 @@ label ending_alone:
     play music "music/waiting_theme.ogg" fadein 1.0 volume 0.5
     play bgs "music/light-breeze.ogg" volume 0.25
 
-    voice "voice/narrator/1caa1575eb8b5842.mp3"
+    $ play_narrator("1caa1575eb8b5842")
     "Тот же постоялый двор, десятью годами позже. Тот же запах ржаного хлеба из сеней — только дорога стала новее."
 
     show arcardiydef at center_char
@@ -2055,25 +2081,25 @@ label ending_alone:
 
     "{i}(Он достаёт из кармана засаленную книжку — ту самую, которую взял в Васильевке и не вернул.){/i}"
 
-    voice "voice/arcardy/58434850cb3f79b5.mp3"
-    arcardy "И всё-таки я не жалею, что смеялся над Козьным, и не жалею, что не смеялся. Я жалею, что не умел говорить вовремя ни там, ни здесь."
+    voice "voice/arcardy/2d14e64581495553.mp3"
+    arcardy "И всё-таки я не жалею, что смеялся над Козьиным, и не жалею, что не смеялся. Я жалею, что не умел говорить вовремя ни там, ни здесь."
 
     menu:
         "Пойти на кладбище — и сказать вслух то, что не сказал":
             $ mercy += 1
-            voice "voice/narrator/a2ace9cfb32f62b4.mp3"
+            $ play_narrator("a2ace9cfb32f62b4")
             "Аркадий нанимает подводу и едет в Васильевку. На кладбище нет цветов; он рвёт их у забора и кладёт на плиту, сначала молча."
             voice "voice/arcardy/da71400bc689e2d5.mp3"
             arcardy "{i}(наконец){/i} Я пришёл. Не прощения просить — сказать, что ты был прав во всём, кроме одного: жизнь не пустая штука. Она пустая только для того, кто не остался."
             "{i}(Он приезжает в город и пишет письмо, которое отправляет, и получает ответ, который читает вслух.){/i}"
-            voice "voice/narrator/879fe86f9fefc63f.mp3"
+            $ play_narrator("879fe86f9fefc63f")
             "Это ещё не примирение, но уже не бегство."
         "Уехать, не сойдя с крыльца":
             $ nihil += 1
             "{i}(Аркадий платит хозяину, выходит на дорогу и идёт к станции, не оглядываясь.){/i}"
-            voice "voice/narrator/247ea26bb59b1060.mp3"
+            $ play_narrator("247ea26bb59b1060")
             "Через неделю он в Петербурге; через год за границей; и всю жизнь едет быстрее, чем ездят из любопытства."
-            voice "voice/narrator/91fff94b0c88e20f.mp3"
+            $ play_narrator("91fff94b0c88e20f")
             "На его столе лежит та же книжка; он её не перечитывает, но и не выбрасывает — и в этом, а не в отъезде, и кончается его история."
 
     stop music fadeout 2.5
@@ -2086,6 +2112,10 @@ label ending_alone:
 # ЗАКРЫВАЮЩИЙ КАДР
 # ============================================================
 label finale_card:
+
+    $ newly_opened = unlock_ending(ending)
+    $ opened = len(persistent.endings)
+    $ note = "Новая развязка" if newly_opened else "Развязка"
 
     scene black
     with fade
@@ -2102,10 +2132,14 @@ label finale_card:
     with fade
 
     if ending == "дом":
-        centered "{size=64}{b}ЖИВАЯ ЖИЗНЬ{/b}{/size}\n\n{size=24}развязка 1 из 3 · по роману И. С. Тургенева «Отцы и дети»{/size}"
+        centered "{size=64}{b}ЖИВАЯ ЖИЗНЬ{/b}{/size}\n\n{size=24}развязка 1 из 3 · по роману И. С. Тургенева «Отцы и дети»{/size}\n\n{size=22}[note] · открыто [opened] из 3{/size}"
     elif ending == "одна":
-        centered "{size=64}{b}НЕВОЗВРАТНОЕ{/b}{/size}\n\n{size=24}развязка 2 из 3 · по роману И. С. Тургенева «Отцы и дети»{/size}"
+        centered "{size=64}{b}НЕВОЗВРАТНОЕ{/b}{/size}\n\n{size=24}развязка 2 из 3 · по роману И. С. Тургенева «Отцы и дети»{/size}\n\n{size=22}[note] · открыто [opened] из 3{/size}"
     else:
-        centered "{size=64}{b}ОДИН В ПОЛЕ{/b}{/size}\n\n{size=24}развязка 3 из 3 · по роману И. С. Тургенева «Отцы и дети»{/size}"
+        centered "{size=64}{b}ОДИН В ПОЛЕ{/b}{/size}\n\n{size=24}развязка 3 из 3 · по роману И. С. Тургенева «Отцы и дети»{/size}\n\n{size=22}[note] · открыто [opened] из 3{/size}"
+
+    $ quick_menu = False
+
+    call screen credits
 
     return

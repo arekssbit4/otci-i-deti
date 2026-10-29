@@ -11,6 +11,11 @@ init offset = -2
 init python:
     gui.init(1920, 1080)
 
+    ## PT Serif (OFL) - кириллица, литературная антиква.
+    config.font_replacement_map[("fonts/PT_Serif-Web-Regular.ttf", True, False)] = ("fonts/PT_Serif-Web-Bold.ttf", False, False)
+    config.font_replacement_map[("fonts/PT_Serif-Web-Regular.ttf", False, True)] = ("fonts/PT_Serif-Web-Italic.ttf", False, False)
+    config.font_replacement_map[("fonts/PT_Serif-Web-Regular.ttf", True, True)] = ("fonts/PT_Serif-Web-BoldItalic.ttf", False, False)
+
 ## Включить проверку на недопустимые или нестабильные свойства в экранах или
 ## преобразованиях
 define config.check_conflicting_properties = True
@@ -59,13 +64,16 @@ define gui.interface_text_color = '#ffffff'
 ## Шрифты и их размеры #########################################################
 
 ## Шрифт, используемый внутриигровым текстом.
-define gui.text_font = "DejaVuSans.ttf"
+define gui.text_font = "fonts/PT_Serif-Web-Regular.ttf"
 
 ## Шрифт, используемый именами персонажей.
-define gui.name_text_font = "DejaVuSans.ttf"
+define gui.name_text_font = "fonts/PT_Serif-Web-Regular.ttf"
 
 ## Шрифт, используемый текстом вне игры.
-define gui.interface_text_font = "DejaVuSans.ttf"
+define gui.interface_text_font = "fonts/PT_Serif-Web-Regular.ttf"
+
+## Шрифт заголовка в главном меню.
+define gui.title_text_font = "fonts/PT_Serif-Web-Bold.ttf"
 
 ## Размер нормального текста диалога.
 define gui.text_size = 33
@@ -100,8 +108,8 @@ define gui.game_menu_background = "gui/game_menu.png"
 ## Высота текстового окна, содержащего диалог.
 define gui.textbox_height = 278
 
-## Местоположение текстового окна по вертикали экрана. 0.0 — верх, 0.5 — центр и
-## 1.0 — низ.
+## Местоположение текстового окна по вертикали экрана. 0.0 - верх, 0.5 - центр и
+## 1.0 - низ.
 define gui.textbox_yalign = 1.0
 
 
@@ -136,8 +144,9 @@ define gui.namebox_tile = False
 define gui.dialogue_xpos = 402
 define gui.dialogue_ypos = 75
 
-## Максимальная ширина текста диалога в пикселях.
-define gui.dialogue_width = 1116
+## Максимальная ширина текста диалога в пикселях. PT Serif чуть просторнее
+## в переносе строк, поэтому окно используется шире исходных 1116 px.
+define gui.dialogue_width = 1180
 
 ## Горизонтальное выравнивание текста диалога. Это может быть 0.0 для
 ## левоориентированного, 0.5 для центрированного и 1.0 для правоориентированного
@@ -174,8 +183,8 @@ define gui.button_text_hover_color = gui.hover_color
 define gui.button_text_selected_color = gui.selected_color
 define gui.button_text_insensitive_color = gui.insensitive_color
 
-## Горизонтальное выравнивание текста в кнопке. (0.0 — лево, 0.5 — по центру,
-## 1.0 — право).
+## Горизонтальное выравнивание текста в кнопке. (0.0 - лево, 0.5 - по центру,
+## 1.0 - право).
 define gui.button_text_xalign = 0.0
 
 
@@ -223,7 +232,7 @@ define gui.choice_button_text_insensitive_color = '#8888887f'
 
 ## Кнопки Слотов ###############################################################
 ##
-## Кнопка слотов — особый вид кнопки. Она содержит миниатюру и текст,
+## Кнопка слотов - особый вид кнопки. Она содержит миниатюру и текст,
 ## описывающий слот сохранения. Слот сохранения использует файлы из gui/button,
 ## как и другие виды кнопок.
 

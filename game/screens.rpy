@@ -85,7 +85,7 @@ style frame:
 ## Экран разговора #############################################################
 ##
 ## Экран разговора используется для показа диалога игроку. Он использует два
-## параметра — who и what — что, соответственно, имя говорящего персонажа и
+## параметра - who и what - что, соответственно, имя говорящего персонажа и
 ## показываемый текст. (Параметр who может быть None, если имя не задано.)
 ##
 ## Этот экран должен создать текст с id "what", чтобы Ren'Py могла показать
@@ -110,7 +110,7 @@ screen say(who, what):
 
 
     ## Если есть боковое изображение ("голова"), показывает её поверх текста.
-    ## По стандарту не показывается на варианте для мобильных устройств — мало
+    ## По стандарту не показывается на варианте для мобильных устройств - мало
     ## места.
     if not renpy.variant("small"):
         add SideImage() xalign 0.0 yalign 1.0
@@ -253,6 +253,7 @@ screen quick_menu():
             textbutton _("Сохранить") action ShowMenu('save')
             textbutton _("Б.Сохр") action QuickSave()
             textbutton _("Б.Загр") action QuickLoad()
+            textbutton _("Скрыть") action HideInterface()
             textbutton _("Опции") action ShowMenu('preferences')
 
 
@@ -299,7 +300,13 @@ screen navigation():
 
         if main_menu:
 
+            textbutton _("Продолжить") action Continue()
+
             textbutton _("Начать") action Start()
+
+            textbutton _("Сцены") action ShowMenu("scenes")
+
+            textbutton _("Развязки") action ShowMenu("endings")
 
         else:
 
@@ -368,11 +375,28 @@ screen main_menu():
 
     if gui.show_name:
 
+        $ opened = len(persistent.endings or [])
+        $ scenes_opened = len(persistent.scenes_seen or [])
+
         vbox:
             style "main_menu_vbox"
 
+            text _("визуальная новелла"):
+                style "main_menu_kicker"
+
             text "[config.name!t]":
                 style "main_menu_title"
+
+            text _("по роману И. С. Тургенева"):
+                style "main_menu_subtitle"
+
+            null height 18
+
+            text _("Открыто развязок: [opened] из 3"):
+                style "main_menu_version"
+
+            text _("Открыто сцен: [scenes_opened] из 10"):
+                style "main_menu_version"
 
             text "[config.version]":
                 style "main_menu_version"
@@ -402,6 +426,17 @@ style main_menu_text:
 
 style main_menu_title:
     properties gui.text_properties("title")
+
+style main_menu_kicker is main_menu_text
+style main_menu_subtitle is main_menu_text
+
+style main_menu_kicker:
+    size 24
+    color gui.idle_small_color
+
+style main_menu_subtitle:
+    size 28
+    color "#cfd8e3"
 
 style main_menu_version:
     properties gui.text_properties("version")
@@ -579,7 +614,7 @@ style about_label_text:
 ## Экраны загрузки и сохранения ################################################
 ##
 ## Эти экраны ответственны за возможность сохранять и загружать игру. Так
-## как они почти одинаковые, оба реализованы по правилам третьего экрана —
+## как они почти одинаковые, оба реализованы по правилам третьего экрана -
 ## file_slots.
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#save 
@@ -754,6 +789,16 @@ screen preferences():
                     textbutton _("Всего текста") action Preference("skip", "toggle")
                     textbutton _("После выборов") action Preference("after choices", "toggle")
                     textbutton _("Переходов") action InvertSelected(Preference("transitions", "toggle"))
+
+                vbox:
+                    style_prefix "radio"
+                    label _("Рассказчик")
+                    textbutton _("Женский голос"):
+                        action SetField(persistent, "narrator_gender", "f")
+                        selected persistent.narrator_gender == "f"
+                    textbutton _("Мужской голос"):
+                        action SetField(persistent, "narrator_gender", "m")
+                        selected persistent.narrator_gender == "m"
 
                 ## Дополнительные vbox'ы типа "radio_pref" или "check_pref"
                 ## могут быть добавлены сюда для добавления новых настроек.
