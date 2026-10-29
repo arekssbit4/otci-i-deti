@@ -12,6 +12,17 @@
 
 ---
 
+<div align="center">
+
+### ▶ [Скачать и играть — Windows, 92 МБ](https://github.com/wDemka/otci-i-deti/releases/latest/download/OtciDetiAlpha-1.2-win.zip)
+
+Распакуй архив в любую папку и запусти **`OtciDetiAlpha.exe`** — Ren'Py ставить
+не нужно, движок и все 410 реплик озвучки уже внутри.
+
+</div>
+
+---
+
 Весь роман — от постоялого двора в главе I до могилы в эпилоге — перенесён в
 кликабельную новеллу без сокращений фабулы. Игрок читает, слушает и решает,
 чем всё кончится: текст написан заново, но следует Тургеневу, и финальная
@@ -140,11 +151,27 @@
 
 ## Запуск
 
+**Готовая сборка (Windows).** Скачать
+[OtciDetiAlpha-1.2-win.zip](https://github.com/wDemka/otci-i-deti/releases/tag/v1.2)
+из Releases, распаковать в любую папку, двойной клик по `OtciDetiAlpha.exe`.
+Сборка проверена на Windows 11 x64: лог чистый, трейсбеков нет.
+
+**Из исходников.**
+
 1. Установить [Ren'Py 8.5.2](https://www.renpy.org/latest.html).
 2. В Launcher добавить эту папку проекта (или положить её в каталог с играми).
 3. **Launch Game**.
 
-Самостоятельно собирается в исполняемый дистрибутив через *Compile Distributables*.
+**Свои сборки под Linux и macOS** — той же командой, что собрана эта:
+
+```bash
+renpy.sh <путь>/renpy-8.5.2-sdk/launcher distribute <путь>/OtciDetiAlpha \
+    --package pc --no-update --destination ./dist
+```
+
+`--package` принимает `win`, `linux`, `mac` и `pc` (Windows + Linux в одном
+архиве). Готовые обновления игры не строятся (`--no-update`), так как раздавать
+их пока негде.
 
 ## Структура
 

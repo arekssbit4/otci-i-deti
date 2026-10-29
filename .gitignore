@@ -29,3 +29,7 @@
 *.pre-voice
 /traceback.txt
 /pipeline/
+
+# Артефакты сборки дистрибутивов
+/dist
+/old-game
