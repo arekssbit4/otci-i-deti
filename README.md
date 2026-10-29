@@ -6,7 +6,7 @@
 
 `Ren'Py 8.5.2` · `12 сцен` · `14 карточек глав` · `17 развилений` · `3 концовки` · `10 портретов по тексту` · `нейроозвучка`
 
-**Разработка:** [@wherearethechoice](https://t.me/wherearethechoice) · [@arekssbit4](https://t.me/arekssbit4) — [авторские права](LICENSE)
+**Разработка:** [@wherearethechoice](https://t.me/wherearethechoice) · [@arekssbit4](https://t.me/arekssbit4) 
 
 ![Сельское кладбище. Тихий летний вечер](docs/img/shot_s8_cemetery.jpg)
 
