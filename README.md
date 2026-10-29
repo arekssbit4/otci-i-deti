@@ -14,7 +14,7 @@
 
 <div align="center">
 
-### ▶ [Скачать и играть — Windows, 92 МБ](https://github.com/wDemka/otci-i-deti/releases/latest/download/OtciDetiAlpha-1.2-win.zip)
+### ▶ [Скачать и играть — Windows, 97 МБ](https://github.com/wDemka/otci-i-deti/releases/latest/download/OtciDetiAlpha-1.3-win.zip)
 
 Распакуй архив в любую папку и запусти **`OtciDetiAlpha.exe`** — Ren'Py ставить
 не нужно, движок и все 410 реплик озвучки уже внутри.
@@ -171,7 +171,7 @@
 ## Запуск
 
 **Готовая сборка (Windows).** Скачать
-[OtciDetiAlpha-1.2-win.zip](https://github.com/wDemka/otci-i-deti/releases/tag/v1.2)
+[OtciDetiAlpha-1.3-win.zip](https://github.com/wDemka/otci-i-deti/releases/tag/v1.3)
 из Releases, распаковать в любую папку, двойной клик по `OtciDetiAlpha.exe`.
 Сборка проверена на Windows 11 x64: лог чистый, трейсбеков нет.
 
