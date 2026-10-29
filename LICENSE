@@ -1,0 +1,69 @@
+# Лицензия и авторские права
+
+## Правообладатели
+
+**© 2026 wDemka (@wherearethechoice) и @arekssbit4.**
+
+Сценарий игры, распределение выборов, все иллюстрации (фоны и спрайты),
+вёрстка интерфейса, звуковой дизайн и готовые сборки — результат нашей работы.
+Он защищён авторским правом РФ и международными конвенциями.
+
+## Что можно и чего нельзя
+
+Текст, графика, озвучка и прочее содержательное наполнение игры распространяются
+под лицензией **CC BY-NC-SA 4.0**:
+<https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ru>
+
+Разрешено — при условии указания авторства, некоммерческого использования и
+распространения производных работ под той же лицензией:
+
+- играть, копировать и пересылать сборку;
+- публиковать скриншоты и летсплеи;
+- переводить, перерабатывать и делать фанатские ответвления.
+
+Не разрешено без отдельного согласия:
+
+- продавать игру или её части, размещать на платных площадках;
+- выдавать чужую работу за свою;
+- использовать материал в рекламе и коммерческих продуктах.
+
+## Открытая часть
+
+Программный код проекта (`.rpy`-файлы: `game/script.rpy`, `game/options.rpy`,
+`game/screens.rpy`, `game/gui.rpy`) распространяется под лицензией **MIT**:
+
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in
+> all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+> SOFTWARE.
+
+## Что нам не принадлежит
+
+Нижеперечисленное остаётся собственностью своих правообладателей; мы не можем
+передать вам на него никаких прав.
+
+| | |
+|:--|:--|
+| Роман «Отцы и дети» | И. С. Тургенев, 1862. Общественное достояние. |
+| Движок Ren'Py 8.5.2 | Ren'Py Team, лицензия MIT. |
+| Готовые ассеты GUI движка | Ren'Py Team. |
+| Нейроголосы озвучки | Microsoft (Edge TTS). Синтез выполнен из текстов сценария; права на сами голоса принадлежат Microsoft. |
+| Шрифт интерфейса | DejaVu Sans (gui.text_font); поставляется вместе с Ren'Py под собственной лицензией. |
+
+## Связь
+
+Вопросы о лицензии, запросы на коммерческое использование или желание
+поучаствовать — Telegram: **@wherearethechoice**, **@arekssbit4**.
