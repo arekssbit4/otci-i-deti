@@ -4,26 +4,30 @@ init python:
 # ============================================================
 # ПЕРСОНАЖИ
 # ============================================================
-define arcardy = Character('Аркадий', color="#d6f5c8")
-define bazarov = Character('Базаров', color="#cfe3ff")
-define nikolay = Character('Николай Петрович', color="#ffe6b3")
-define pavel = Character('Павел Петрович', color="#e8e2ff")
-define anna = Character('Анна Сергеевна', color="#ffd6e0")
-define fedosiya = Character('Фенечка', color="#ffe0c2")
-define mitya = Character('Митя', color="#fff0d0")
-define catya = Character('Катя', color="#ffe9f0")
-define vasiliy = Character('Василий Иванович', color="#dcf0dc")
-define arina = Character('Арина Власьевна', color="#f5dcdc")
+## Имена говорящих читаются с пергаментного namebox (#dbcfb4), поэтому цвета -
+## тёмные чернила, а не пастель: пастель на светлой бумаге давала контраст
+## 1.2:1. Оттенки подобраны по прежнему «семейству» персонажа и все держат
+## контраст >= 4.5:1 (WCAG AA).
+define arcardy = Character('Аркадий', color="#2f5d33")
+define bazarov = Character('Базаров', color="#1f3a63")
+define nikolay = Character('Николай Петрович', color="#7a4a12")
+define pavel = Character('Павел Петрович', color="#5a2f6e")
+define anna = Character('Анна Сергеевна', color="#8c2438")
+define fedosiya = Character('Фенечка', color="#8a3a17")
+define mitya = Character('Митя', color="#6b5310")
+define catya = Character('Катя', color="#93326e")
+define vasiliy = Character('Василий Иванович', color="#2a5a52")
+define arina = Character('Арина Власьевна', color="#6e2417")
 define petr = Character('Пётр')
 define prokofiy = Character('Прокофьич')
 define dunyasha = Character('Дуняша')
 
 # Голоса без спрайтов — второстепенные лица романа
-define smit = Character('Ситников', color="#cfe3ff")
-define kozy = Character('Козьин', color="#c8e0e8")
-define liza = Character('Лиза', color="#f0d6ff")
-define foma = Character('Фома', color="#e0e0c8")
-define doct = Character('Доктор', color="#d8d8e8")
+define smit = Character('Ситников', color="#1f5c7a")
+define kozy = Character('Козьин', color="#33525a")
+define liza = Character('Лиза', color="#6e2a5a")
+define foma = Character('Фома', color="#4f5220")
+define doct = Character('Доктор', color="#3a4463")
 
 # ============================================================
 # Фоны

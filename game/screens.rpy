@@ -163,6 +163,31 @@ style say_dialogue:
 
     adjust_spacing False
 
+
+## Карточки глав, титул и развязки #############################################
+##
+## Все они идут через оператор `centered`, у которого по умолчанию (common
+## 00style.rpy) НЕТ фона. На чёрной сцене чернильный текст gui.text_color
+## #241811 давал контраст 1.2:1 и был нечитаем. Даём карточке пергаментную
+## плашку из универсальной рамки 9-slice — тот же материал, что у окон и
+## подтверждений. Строки текста в script.rpy при этом не тронуты.
+
+style centered_window:
+    xalign 0.5
+    xfill False
+    yalign 0.5
+    yfill False
+
+    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    padding (110, 78, 110, 78)
+
+style centered_text:
+    textalign 0.5
+    xalign 0.5
+    yalign 0.5
+    layout "subtitle"
+
+
 ## Экран ввода #################################################################
 ##
 ## Этот экран используется, чтобы показывать renpy.input. Это параметр запроса,
@@ -404,10 +429,13 @@ style main_menu_frame:
 
 style main_menu_vbox:
     xalign 1.0
-    xoffset -30
+    ## Отступ от края экрана: пергаментный лист начинается в 60 px, а его
+    ## двойная чернильная рамка — в 78 px. При -30 название и версия
+    ## наезжали на рамку и уходили на дерево.
+    xoffset -110
     xmaximum 1200
     yalign 1.0
-    yoffset -30
+    yoffset -104
 
 style main_menu_text:
     properties gui.text_properties("main_menu", accent=True)
@@ -541,18 +569,24 @@ style game_menu_side:
     spacing 15
 
 style game_menu_label:
-    xpos 75
+    ## Левый край пергаментного листа — x=62, двойная чернильная рамка — x=78
+    ## и 86. Ставим заголовок внутрь рамки.
+    xpos 100
     ysize 180
 
 style game_menu_label_text:
     size 75
     color gui.accent_color
-    yalign 0.5
+    ## Двойная чернильная линейка шапки проходит на y=78..87; при yalign 0.5
+    ## семидесятипятие символы разрезались ей пополам.
+    yalign 0.78
 
 style return_button:
     xpos gui.navigation_xpos
     yalign 1.0
-    yoffset -45
+    ## Внутренняя двойная рамка листа — на y=993..1001; при -45 кнопка
+    ## «Вернуться» перегораживала её.
+    yoffset -100
 
 
 ## Экран Об игре ###############################################################
@@ -673,6 +707,9 @@ screen file_slots(title):
 
                 xalign 0.5
                 yalign 1.0
+                ## yalign 1.0 ставил нижнюю строку (Sync) прямо на быстрое
+                ## меню — обе шириной на пол-экрана и перекрывались.
+                yoffset -52
 
                 hbox:
                     xalign 0.5
@@ -873,8 +910,11 @@ style radio_vbox:
 
 style radio_button:
     properties gui.button_properties("radio_button")
-    ## Кружок 105x49 прижат к правому краю плашки (xalign=1.0), текст в
-    ## отступе Borders(78,0,27,0) слева от него.
+    ## Кружок 105x49 прижат к правому краю плашки (xalign=1.0), видимая часть
+    ## занимает последние 27 px. Borders(78,0,27,0) давали нулевой зазор и
+    ## точка залезала на последнюю букву, а слева висели 78 px пустоты.
+    ## Padding правим только у стиля — 9-slice самой плашки не тронут.
+    padding (24, 0, 44, 0)
     idle_foreground Image("gui/button/radio_foreground.png", xalign=1.0)
     hover_foreground Image("gui/button/radio_hover_foreground.png", xalign=1.0)
     selected_foreground Image("gui/button/radio_selected_foreground.png", xalign=1.0)
@@ -889,6 +929,8 @@ style check_vbox:
 
 style check_button:
     properties gui.button_properties("check_button")
+    ## См. radio_button: крестик/птичка тоже в последних 27 px плашки.
+    padding (24, 0, 44, 0)
     idle_foreground Image("gui/button/check_foreground.png", xalign=1.0)
     hover_foreground Image("gui/button/check_hover_foreground.png", xalign=1.0)
     selected_foreground Image("gui/button/check_selected_foreground.png", xalign=1.0)

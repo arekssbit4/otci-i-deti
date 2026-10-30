@@ -455,14 +455,32 @@ def main():
 
     # ---------------- overlays 1920x1080
     w, h = 1920, 1080
-    im = Image.new("RGBA", (w, h))
-    d = ImageDraw.Draw(im)
-    for x in range(w):   # wood darkening, alpha 135 left -> 105 right
-        a = int(135 - 30 * x / w)
-        d.line([(x, 0), (x, h - 1)], fill=WOOD_DARK_RGB + (a,))
-    save(im, G + "/overlay/main_menu.png")
 
-    save(solid(w, h, WOOD_DARK_RGB + (100,)), G + "/overlay/game_menu.png")
+    def nav_wash(path):
+        """Затенение ТОЛЬКО под левой колонкой навигации.
+
+        Рамки main_menu_frame / game_menu_outer_frame рисуют этот PNG 1:1 на
+        весь экран, поэтому форма затемнения задаётся здесь, а не размером
+        рамки. Ранее ложились равномерной тонировкой на весь пергаментный
+        лист: в главном меню лист темнел до #887b68 (цитаты 3.6:1, название
+        2.5:1), в игровом меню колонки настроек падали до 2.7:1.
+        """
+        im = Image.new("RGBA", (w, h))
+        d = ImageDraw.Draw(im)
+        for x in range(w):
+            if x <= 380:
+                a = 125
+            elif x < 460:
+                a = int(125 * (460 - x) / 80)
+            else:
+                a = 0
+            if a:
+                d.line([(x, 0), (x, h - 1)], fill=WOOD_DARK_RGB + (a,))
+        save(im, path)
+
+    nav_wash(G + "/overlay/main_menu.png")
+    nav_wash(G + "/overlay/game_menu.png")
+
     save(solid(w, h, CONFIRM_RGB + (150,)), G + "/overlay/confirm.png")
 
     # ---------------- window icon 250x250
