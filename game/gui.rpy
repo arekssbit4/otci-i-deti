@@ -192,9 +192,14 @@ define gui.button_text_xalign = 0.0
 ##
 ## Эти настройки используются стандартным интерфейсом:
 
-define gui.radio_button_borders = Borders(78, 0, 27, 0)
+## Плашка этих кнопок (gui/button/idle_background.png, 450x49) имеет тёмные
+## рамки на строках 2..3 и 45..46 и прозрачные поля по 2 px сверху/снизу.
+## Нулевые вертикальные borders сплющивали 9-slice до высоты текста, и
+## маркер radio/check вылезал за нижнюю рамку. 4 px сверху/снизу фиксируют
+## рамки натуральной толщиной; высота кнопки задаётся padding в screens.rpy.
+define gui.radio_button_borders = Borders(78, 4, 27, 4)
 
-define gui.check_button_borders = Borders(78, 0, 27, 0)
+define gui.check_button_borders = Borders(78, 4, 27, 4)
 
 define gui.confirm_button_text_xalign = 0.5
 
@@ -301,7 +306,12 @@ define gui.main_menu_text_xalign = 1.0
 ## пользовательского интерфейса, когда наложения или окна не представлены.
 
 ## Генерируем рамки.
-define gui.frame_borders = Borders(6, 6, 6, 6)
+## frame.png (900x375): двойная линия арт-рамки занимает ровно 10 px с каждой
+## стороны (внешняя на 2..3, внутренняя на 8..9). С borders=6 угловой срез
+## 6x6 не включал внутреннюю линию - она попадала в растягиваемую центр-область
+## и давала размазанную незамкнутую рамку; 10 оставляет обе линии и
+## скругление углов целыми.
+define gui.frame_borders = Borders(10, 10, 10, 10)
 
 ## Рамки, используемые в частях экрана подтверждения.
 define gui.confirm_frame_borders = Borders(60, 60, 60, 60)

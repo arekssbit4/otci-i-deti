@@ -678,7 +678,17 @@ screen file_slots(title):
                 style_prefix "slot"
 
                 xalign 0.5
-                yalign 0.5
+                ## Было yalign 0.5: область fixed 195..1035, центр 615, сетка
+                ## 633 px (2 x 309 + spacing 15) занимала 299..932 и низом
+                ## накрывала ряд страниц (919..983), т.к. order_reverse
+                ## рисует сетку поверх него. Опустить ряд вниз нельзя: между
+                ## старым низом сетки (932) и быстрым меню (992) 60 px при
+                ## высоте ряда 64. Поэтому поднимаем сетку к верху:
+                ## yalign 0.0 + yoffset 65 -> 260..893; зазоры: до ряда
+                ## страниц 26 px, снизу от подзаголовка «N страница»
+                ## (~240) 20 px, ряд и быстрое меню не тронуты.
+                yalign 0.0
+                yoffset 65
 
                 spacing gui.slot_spacing
 
@@ -911,15 +921,19 @@ style radio_vbox:
 style radio_button:
     properties gui.button_properties("radio_button")
     ## Кружок 105x49 прижат к правому краю плашки (xalign=1.0), видимая часть
-    ## занимает последние 27 px. Borders(78,0,27,0) давали нулевой зазор и
-    ## точка залезала на последнюю букву, а слева висели 78 px пустоты.
-    ## Padding правим только у стиля — 9-slice самой плашки не тронут.
-    padding (24, 0, 44, 0)
-    idle_foreground Image("gui/button/radio_foreground.png", xalign=1.0)
-    hover_foreground Image("gui/button/radio_hover_foreground.png", xalign=1.0)
-    selected_foreground Image("gui/button/radio_selected_foreground.png", xalign=1.0)
-    selected_hover_foreground Image("gui/button/radio_selected_hover_foreground.png", xalign=1.0)
-    insensitive_foreground Image("gui/button/radio_foreground.png", xalign=1.0)
+    ## занимает последние 27 px; справа у него 5 px прозрачного поля ассета -
+    ## это и есть зазор до правой рамки. Было: вертикальный padding 0, кнопка
+    ## сжималась до высоты текста (30 px), а маркер без yalign рисовался с
+    ## верхом у верхней рамки - его низ (y=36) вылезал за нижнюю рамку на
+    ## 7 px. Стало: высота кнопки = текст 30 + 10 + 10 = 50 px (≈ натуральная
+    ## высота ассета 49 px), маркер явно центрирован (yalign=0.5): видимая
+    ## часть в y 14.5..36.5, зазоры до верхней и нижней рамок ~11 px.
+    padding (24, 10, 44, 10)
+    idle_foreground Image("gui/button/radio_foreground.png", xalign=1.0, yalign=0.5)
+    hover_foreground Image("gui/button/radio_hover_foreground.png", xalign=1.0, yalign=0.5)
+    selected_foreground Image("gui/button/radio_selected_foreground.png", xalign=1.0, yalign=0.5)
+    selected_hover_foreground Image("gui/button/radio_selected_hover_foreground.png", xalign=1.0, yalign=0.5)
+    insensitive_foreground Image("gui/button/radio_foreground.png", xalign=1.0, yalign=0.5)
 
 style radio_button_text:
     properties gui.text_properties("radio_button")
@@ -929,13 +943,16 @@ style check_vbox:
 
 style check_button:
     properties gui.button_properties("check_button")
-    ## См. radio_button: крестик/птичка тоже в последних 27 px плашки.
-    padding (24, 0, 44, 0)
-    idle_foreground Image("gui/button/check_foreground.png", xalign=1.0)
-    hover_foreground Image("gui/button/check_hover_foreground.png", xalign=1.0)
-    selected_foreground Image("gui/button/check_selected_foreground.png", xalign=1.0)
-    selected_hover_foreground Image("gui/button/check_selected_hover_foreground.png", xalign=1.0)
-    insensitive_foreground Image("gui/button/check_foreground.png", xalign=1.0)
+    ## См. radio_button: крестик/птичка тоже в последних 27 px плашки,
+    ## вертикаль лечится одинаково - padding 10/10 + yalign=0.5. У check-
+    ## ассетов прозрачный край справа 6 px. mute_all_button наследует этот
+    ## стиль, поэтому «Без звука» чинится тем же изменением.
+    padding (24, 10, 44, 10)
+    idle_foreground Image("gui/button/check_foreground.png", xalign=1.0, yalign=0.5)
+    hover_foreground Image("gui/button/check_hover_foreground.png", xalign=1.0, yalign=0.5)
+    selected_foreground Image("gui/button/check_selected_foreground.png", xalign=1.0, yalign=0.5)
+    selected_hover_foreground Image("gui/button/check_selected_hover_foreground.png", xalign=1.0, yalign=0.5)
+    insensitive_foreground Image("gui/button/check_foreground.png", xalign=1.0, yalign=0.5)
 
 style check_button_text:
     properties gui.text_properties("check_button")
