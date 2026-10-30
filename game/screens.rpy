@@ -85,7 +85,7 @@ style frame:
 ## Экран разговора #############################################################
 ##
 ## Экран разговора используется для показа диалога игроку. Он использует два
-## параметра - who и what - что, соответственно, имя говорящего персонажа и
+## параметра — who и what — что, соответственно, имя говорящего персонажа и
 ## показываемый текст. (Параметр who может быть None, если имя не задано.)
 ##
 ## Этот экран должен создать текст с id "what", чтобы Ren'Py могла показать
@@ -110,7 +110,7 @@ screen say(who, what):
 
 
     ## Если есть боковое изображение ("голова"), показывает её поверх текста.
-    ## По стандарту не показывается на варианте для мобильных устройств - мало
+    ## По стандарту не показывается на варианте для мобильных устройств — мало
     ## места.
     if not renpy.variant("small"):
         add SideImage() xalign 0.0 yalign 1.0
@@ -135,7 +135,9 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    ## Frame вместо Image: текст тянется на мониторах шире 1920 (заказчик на
+    ## 2560), деревянные кромки и чернильные линейки остаются в углах 9-slice.
+    background Frame("gui/textbox.png", Borders(60, 48, 60, 0), tile=False)
 
 style namebox:
     xpos gui.name_xpos
@@ -253,7 +255,6 @@ screen quick_menu():
             textbutton _("Сохранить") action ShowMenu('save')
             textbutton _("Б.Сохр") action QuickSave()
             textbutton _("Б.Загр") action QuickLoad()
-            textbutton _("Скрыть") action HideInterface()
             textbutton _("Опции") action ShowMenu('preferences')
 
 
@@ -271,12 +272,16 @@ style quick_button_text is button_text
 style quick_menu:
     xalign 0.5
     yalign 1.0
+    yoffset -30
 
 style quick_button:
     properties gui.button_properties("quick_button")
 
 style quick_button_text:
     properties gui.text_properties("quick_button")
+
+    ## На пергаменте светлый текст не читается: явный тёмный цвет чернил.
+    color gui.idle_color
 
 
 ################################################################################
@@ -300,13 +305,7 @@ screen navigation():
 
         if main_menu:
 
-            textbutton _("Продолжить") action Continue()
-
             textbutton _("Начать") action Start()
-
-            textbutton _("Сцены") action ShowMenu("scenes")
-
-            textbutton _("Развязки") action ShowMenu("endings")
 
         else:
 
@@ -375,27 +374,16 @@ screen main_menu():
 
     if gui.show_name:
 
-        $ opened = len(persistent.endings or [])
-        $ scenes_opened = len(persistent.scenes_seen or [])
-
         vbox:
             style "main_menu_vbox"
-
-            text _("визуальная новелла"):
-                style "main_menu_kicker"
 
             text "[config.name!t]":
                 style "main_menu_title"
 
-            text _("по роману И. С. Тургенева"):
-                style "main_menu_subtitle"
-
-            null height 18
-
-            text _("Открыто развязок: [opened] из 3"):
-                style "main_menu_version"
-
-            text _("Открыто сцен: [scenes_opened] из 10"):
+            ## Линия-разделитель под названием. Глиф "❦" (U+2766) отсутствует
+            ## в Old Standard TT (проверено по cmap), поэтому используется
+            ## разрешённый README запасной вариант "- · -".
+            text "- · -":
                 style "main_menu_version"
 
             text "[config.version]":
@@ -427,16 +415,9 @@ style main_menu_text:
 style main_menu_title:
     properties gui.text_properties("title")
 
-style main_menu_kicker is main_menu_text
-style main_menu_subtitle is main_menu_text
-
-style main_menu_kicker:
-    size 24
-    color gui.idle_small_color
-
-style main_menu_subtitle:
-    size 28
-    color "#cfd8e3"
+    ## Антиква не должна мылиться: явный трекинг и отключённые обводки.
+    kerning 2
+    outlines []
 
 style main_menu_version:
     properties gui.text_properties("version")
@@ -596,11 +577,11 @@ screen about():
             label "[config.name!t]"
             text _("Версия [config.version!t]\n")
 
-            ## gui.about обычно установлено в options.rpy.
-            if gui.about:
-                text "[gui.about!t]\n"
+            text _("Авторы: @wherearethechoice и @arekssbit4")
 
-            text _("Сделано с помощью {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
+            text _("Лицензия: содержимое - CC BY-NC-SA 4.0, код - MIT (см. LICENSE).\n")
+
+            text _("Роман - общественное достояние.")
 
 
 style about_label is gui_label
@@ -614,7 +595,7 @@ style about_label_text:
 ## Экраны загрузки и сохранения ################################################
 ##
 ## Эти экраны ответственны за возможность сохранять и загружать игру. Так
-## как они почти одинаковые, оба реализованы по правилам третьего экрана -
+## как они почти одинаковые, оба реализованы по правилам третьего экрана —
 ## file_slots.
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#save 
@@ -793,12 +774,8 @@ screen preferences():
                 vbox:
                     style_prefix "radio"
                     label _("Рассказчик")
-                    textbutton _("Женский голос"):
-                        action SetField(persistent, "narrator_gender", "f")
-                        selected persistent.narrator_gender == "f"
-                    textbutton _("Мужской голос"):
-                        action SetField(persistent, "narrator_gender", "m")
-                        selected persistent.narrator_gender == "m"
+                    textbutton _("Женский голос") action SetField(persistent, "narrator_gender", "f")
+                    textbutton _("Мужской голос") action SetField(persistent, "narrator_gender", "m")
 
                 ## Дополнительные vbox'ы типа "radio_pref" или "check_pref"
                 ## могут быть добавлены сюда для добавления новых настроек.
@@ -896,7 +873,13 @@ style radio_vbox:
 
 style radio_button:
     properties gui.button_properties("radio_button")
-    foreground "gui/button/radio_[prefix_]foreground.png"
+    ## Кружок 105x49 прижат к правому краю плашки (xalign=1.0), текст в
+    ## отступе Borders(78,0,27,0) слева от него.
+    idle_foreground Image("gui/button/radio_foreground.png", xalign=1.0)
+    hover_foreground Image("gui/button/radio_hover_foreground.png", xalign=1.0)
+    selected_foreground Image("gui/button/radio_selected_foreground.png", xalign=1.0)
+    selected_hover_foreground Image("gui/button/radio_selected_hover_foreground.png", xalign=1.0)
+    insensitive_foreground Image("gui/button/radio_foreground.png", xalign=1.0)
 
 style radio_button_text:
     properties gui.text_properties("radio_button")
@@ -906,7 +889,11 @@ style check_vbox:
 
 style check_button:
     properties gui.button_properties("check_button")
-    foreground "gui/button/check_[prefix_]foreground.png"
+    idle_foreground Image("gui/button/check_foreground.png", xalign=1.0)
+    hover_foreground Image("gui/button/check_hover_foreground.png", xalign=1.0)
+    selected_foreground Image("gui/button/check_selected_foreground.png", xalign=1.0)
+    selected_hover_foreground Image("gui/button/check_selected_hover_foreground.png", xalign=1.0)
+    insensitive_foreground Image("gui/button/check_foreground.png", xalign=1.0)
 
 style check_button_text:
     properties gui.text_properties("check_button")
@@ -1169,13 +1156,16 @@ style help_button_text:
     properties gui.text_properties("help_button")
 
 style help_label:
-    xsize 375
-    right_padding 30
+    xsize 250
+    right_padding 24
 
 style help_label_text:
     size gui.text_size
     xalign 1.0
     textalign 1.0
+
+style help_text:
+    xmaximum 900
 
 
 
@@ -1587,10 +1577,22 @@ style window:
 style radio_button:
     variant "small"
     foreground "gui/phone/button/radio_[prefix_]foreground.png"
+    ## На больших экранах prefixed-свойства базового стиля перекрывали бы
+    ## phone-вариант, поэтому сбрасываем их на телефонные картинки.
+    idle_foreground "gui/phone/button/radio_foreground.png"
+    hover_foreground "gui/phone/button/radio_foreground.png"
+    selected_foreground "gui/phone/button/radio_selected_foreground.png"
+    selected_hover_foreground "gui/phone/button/radio_selected_foreground.png"
+    insensitive_foreground "gui/phone/button/radio_foreground.png"
 
 style check_button:
     variant "small"
     foreground "gui/phone/button/check_[prefix_]foreground.png"
+    idle_foreground "gui/phone/button/check_foreground.png"
+    hover_foreground "gui/phone/button/check_foreground.png"
+    selected_foreground "gui/phone/button/check_selected_foreground.png"
+    selected_hover_foreground "gui/phone/button/check_selected_foreground.png"
+    insensitive_foreground "gui/phone/button/check_foreground.png"
 
 style nvl_window:
     variant "small"

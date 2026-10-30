@@ -11,11 +11,6 @@ init offset = -2
 init python:
     gui.init(1920, 1080)
 
-    ## PT Serif (OFL) - кириллица, литературная антиква.
-    config.font_replacement_map[("fonts/PT_Serif-Web-Regular.ttf", True, False)] = ("fonts/PT_Serif-Web-Bold.ttf", False, False)
-    config.font_replacement_map[("fonts/PT_Serif-Web-Regular.ttf", False, True)] = ("fonts/PT_Serif-Web-Italic.ttf", False, False)
-    config.font_replacement_map[("fonts/PT_Serif-Web-Regular.ttf", True, True)] = ("fonts/PT_Serif-Web-BoldItalic.ttf", False, False)
-
 ## Включить проверку на недопустимые или нестабильные свойства в экранах или
 ## преобразованиях
 define config.check_conflicting_properties = True
@@ -31,73 +26,75 @@ define config.check_conflicting_properties = True
 ## Цвета текста в интерфейсе.
 
 ## Акцентный цвет используется в заголовках и подчёркнутых текстах.
-define gui.accent_color = '#99ccff'
+define gui.accent_color = '#7b2f22'
 
 ## Цвет, используемый в текстовой кнопке, когда она не выбрана и не наведена.
-define gui.idle_color = '#888888'
+define gui.idle_color = '#5b4632'
 
 ## Small_color используется в маленьком тексте, который должен быть ярче/темнее,
 ## для того, чтобы выделяться.
-define gui.idle_small_color = '#aaaaaa'
+define gui.idle_small_color = '#6d5a45'
 
 ## Цвет, используемых в кнопках и панелях, когда они наведены.
-define gui.hover_color = '#c1e0ff'
+define gui.hover_color = '#7b2f22'
 
 ## Цвет, используемый текстовой кнопкой, когда она выбрана, но не наведена.
 ## Кнопка может быть выбрана, если это текущий экран или текущее значение
 ## настройки.
-define gui.selected_color = '#ffffff'
+define gui.selected_color = '#241811'
 
 ## Цвет, используемый текстовой кнопкой, когда она не может быть выбрана.
-define gui.insensitive_color = '#8888887f'
+define gui.insensitive_color = '#8a7a66bf'
 
 ## Цвета, используемые для частей панелей, которые не заполняются. Они
 ## используются не напрямую, а только при воссоздании файлов изображений.
-define gui.muted_color = '#3d5166'
-define gui.hover_muted_color = '#5b7a99'
+define gui.muted_color = '#c9b48c'
+define gui.hover_muted_color = '#a8926b'
 
 ## Цвета, используемые в тексте диалогов и выборов.
-define gui.text_color = '#ffffff'
-define gui.interface_text_color = '#ffffff'
+define gui.text_color = '#241811'
+define gui.interface_text_color = '#2f2117'
 
 
 ## Шрифты и их размеры #########################################################
 
 ## Шрифт, используемый внутриигровым текстом.
-define gui.text_font = "fonts/PT_Serif-Web-Regular.ttf"
+define gui.text_font = "fonts/OldStandard-Regular.ttf"
 
 ## Шрифт, используемый именами персонажей.
-define gui.name_text_font = "fonts/PT_Serif-Web-Regular.ttf"
+define gui.name_text_font = "fonts/OldStandard-Bold.ttf"
 
 ## Шрифт, используемый текстом вне игры.
-define gui.interface_text_font = "fonts/PT_Serif-Web-Regular.ttf"
-
-## Шрифт заголовка в главном меню.
-define gui.title_text_font = "fonts/PT_Serif-Web-Bold.ttf"
+define gui.interface_text_font = "fonts/OldStandard-Regular.ttf"
 
 ## Размер нормального текста диалога.
-define gui.text_size = 33
+define gui.text_size = 34
 
 ## Размер имён персонажей.
-define gui.name_text_size = 45
+define gui.name_text_size = 44
 
 ## Размер текста в пользовательском интерфейсе.
-define gui.interface_text_size = 33
+define gui.interface_text_size = 32
 
 ## Размер заголовков в пользовательском интерфейсе.
-define gui.label_text_size = 36
+define gui.label_text_size = 38
 
 ## Размер текста на экране уведомлений.
 define gui.notify_text_size = 24
 
 ## Размер заголовка игры.
-define gui.title_text_size = 75
+define gui.title_text_size = 104
+
+## Явные начертания вместо синтетического жирного: {b} берёт настоящий Bold,
+## иначе антиква "раздувается" искажением.
+init python:
+    config.font_replacement_map["fonts/OldStandard-Regular.ttf", False, True] = ("fonts/OldStandard-Bold.ttf", False, False)
 
 
 ## Главное и игровое меню. #####################################################
 
 ## Изображения, используемые в главном и игровом меню.
-define gui.main_menu_background = "images/bg/maryino_terrace.png"
+define gui.main_menu_background = "gui/main_menu.png"
 define gui.game_menu_background = "gui/game_menu.png"
 
 
@@ -108,8 +105,8 @@ define gui.game_menu_background = "gui/game_menu.png"
 ## Высота текстового окна, содержащего диалог.
 define gui.textbox_height = 278
 
-## Местоположение текстового окна по вертикали экрана. 0.0 - верх, 0.5 - центр и
-## 1.0 - низ.
+## Местоположение текстового окна по вертикали экрана. 0.0 — верх, 0.5 — центр и
+## 1.0 — низ.
 define gui.textbox_yalign = 1.0
 
 
@@ -144,9 +141,8 @@ define gui.namebox_tile = False
 define gui.dialogue_xpos = 402
 define gui.dialogue_ypos = 75
 
-## Максимальная ширина текста диалога в пикселях. PT Serif чуть просторнее
-## в переносе строк, поэтому окно используется шире исходных 1116 px.
-define gui.dialogue_width = 1180
+## Максимальная ширина текста диалога в пикселях.
+define gui.dialogue_width = 1116
 
 ## Горизонтальное выравнивание текста диалога. Это может быть 0.0 для
 ## левоориентированного, 0.5 для центрированного и 1.0 для правоориентированного
@@ -183,8 +179,8 @@ define gui.button_text_hover_color = gui.hover_color
 define gui.button_text_selected_color = gui.selected_color
 define gui.button_text_insensitive_color = gui.insensitive_color
 
-## Горизонтальное выравнивание текста в кнопке. (0.0 - лево, 0.5 - по центру,
-## 1.0 - право).
+## Горизонтальное выравнивание текста в кнопке. (0.0 — лево, 0.5 — по центру,
+## 1.0 — право).
 define gui.button_text_xalign = 0.0
 
 
@@ -194,9 +190,9 @@ define gui.button_text_xalign = 0.0
 ##
 ## Эти настройки используются стандартным интерфейсом:
 
-define gui.radio_button_borders = Borders(27, 6, 6, 6)
+define gui.radio_button_borders = Borders(78, 0, 27, 0)
 
-define gui.check_button_borders = Borders(27, 6, 6, 6)
+define gui.check_button_borders = Borders(78, 0, 27, 0)
 
 define gui.confirm_button_text_xalign = 0.5
 
@@ -213,6 +209,10 @@ define gui.quick_button_text_selected_color = gui.accent_color
 
 # define gui.navigation_button_width = 250
 
+## Отступы внутри навигационной плашки (рамка 9-slice + padding текста),
+## чтобы пергаментная подложка читалась вокруг подписи кнопки.
+define gui.navigation_button_borders = Borders(24, 8, 24, 8)
+
 
 ## Кнопки Выбора ###############################################################
 ##
@@ -225,14 +225,14 @@ define gui.choice_button_borders = Borders(150, 8, 150, 8)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
-define gui.choice_button_text_idle_color = '#888888'
-define gui.choice_button_text_hover_color = "#ffffff"
-define gui.choice_button_text_insensitive_color = '#8888887f'
+define gui.choice_button_text_idle_color = '#4a382a'
+define gui.choice_button_text_hover_color = '#5c1f15'
+define gui.choice_button_text_insensitive_color = '#8a7a66bf'
 
 
 ## Кнопки Слотов ###############################################################
 ##
-## Кнопка слотов - особый вид кнопки. Она содержит миниатюру и текст,
+## Кнопка слотов — особый вид кнопки. Она содержит миниатюру и текст,
 ## описывающий слот сохранения. Слот сохранения использует файлы из gui/button,
 ## как и другие виды кнопок.
 
@@ -261,8 +261,9 @@ define gui.file_slot_rows = 2
 ## пользовательского интерфейса.
 
 ## Местоположение левого края навигационных кнопок по отношению к левому краю
-## экрана.
-define gui.navigation_xpos = 60
+## Экран. main_menu.png: деревянная кромка до x=61, чернильная рамка листа
+## 78-87, плашка кнопок начинается с x=100 (воздух после рамки).
+define gui.navigation_xpos = 100
 
 ## Вертикальная позиция индикатора пропуска.
 define gui.skip_ypos = 15
@@ -274,7 +275,7 @@ define gui.notify_ypos = 68
 define gui.choice_spacing = 33
 
 ## Кнопки в секции навигации главного и игрового меню.
-define gui.navigation_spacing = 6
+define gui.navigation_spacing = 14
 
 ## Контролирует интервал между настройками.
 define gui.pref_spacing = 15
