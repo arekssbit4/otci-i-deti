@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Self-check for the medieval GUI (no Ren'Py window):
-1) every file referenced by gui.rpy exists and matches the README 5.4 size
-   table to the pixel;
+1) every file referenced by gui.rpy exists and matches the size table below
+   to the pixel;
 2) 9-slice edge bands are uniform along the stretch axis;
 3) Pillow mockups at real size: dialog (textbox+namebox+text), choices,
    main menu, save slots, preferences widgets -> saved to tools/gui_previews.
@@ -21,7 +21,7 @@ FONT_B = "game/fonts/OldStandard-Bold.ttf"
 INK = "#241811"
 ACCENT = "#7b2f22"
 
-# README 5.4 table
+# size table (must match the Frame borders in gui.rpy and screens.rpy)
 SIZES = {
     "main_menu.png": (1920, 1080), "game_menu.png": (1920, 1080),
     "overlay/main_menu.png": (1920, 1080),
@@ -83,7 +83,7 @@ for rel, size in SIZES.items():
         if im.mode != "RGBA":
             errors.append(f"MODE {rel}: {im.mode}")
 
-# ---- 1b) opaque surfaces: no alpha holes (task #6.1 regression)
+# ---- 1b) opaque surfaces: no alpha holes
 # plain ImageDraw with alpha REPLACES pixel alpha; shadows must be composited.
 for rel in ("textbox.png", "nvl.png", "main_menu.png", "game_menu.png"):
     im = Image.open(ROOT / "game" / "gui" / rel).convert("RGBA")

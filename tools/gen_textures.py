@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Genereate seamless 512x512 textures for the medieval GUI.
-Implements README-AI.md section 5.3:
  - parchment.png: base #e7dcc2, effect_noise alpha 18-25, 40-60 fibers
    (#d3c19c, a 20-40, blur 1), 6-10 radial stains (#bfa87f, a 12-25),
    periodic edge vignette (>=0.94).
@@ -21,7 +20,7 @@ S = 512
 PAD = 16  # padding around tile for blur-safe edge handling
 TEX = "game/gui/tex"
 
-# palette (README 5.2)
+# palette
 PAPER = (0xE7, 0xDC, 0xC2)
 PAPER_EDGE = (0xD3, 0xC1, 0x9C)
 PAPER_DEEP = (0xBF, 0xA8, 0x7F)

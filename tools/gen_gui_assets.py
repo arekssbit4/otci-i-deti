@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Redraw ALL medieval GUI assets (README-AI.md section 5.4).
+Redraw ALL medieval GUI assets.
 Sizes are FIXED - they match the table and the Frame borders in screens.rpy.
-Palette is strictly README 5.2. No gold, no gloss, no neon.
+Palette is strictly the paper/ink/wood set. No gold, no gloss, no neon.
 Textures come from game/gui/tex/ (gen_textures.py).
 """
 import random
@@ -12,7 +12,7 @@ G = "game/gui"
 TEX = G + "/tex"
 FONT_DIR = "game/fonts"
 
-# --- palette (README 5.2) ---
+# --- palette ---
 PAPER = "#e7dcc2"
 EDGE = "#d3c19c"
 DEEP = "#bfa87f"
@@ -277,7 +277,7 @@ def main():
     save(slot(), G + "/button/slot_idle_background.png")
     save(slot(True), G + "/button/slot_hover_background.png")
 
-    # ---------------- check / radio foregrounds 105x49 (task #6.2)
+    # ---------------- check / radio foregrounds 105x49
     # Frame-as-Window semantics: a bare Image foreground keeps native size and
     # is anchored bottom-left; borders(78,0,27,0) => text occupies x0..77 and
     # the circle sits at x78..99 right behind it. Screens styles anchor the

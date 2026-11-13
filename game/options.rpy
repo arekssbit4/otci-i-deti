@@ -37,7 +37,7 @@ define gui.about = _p("""
 Семнадцать выборов и три развязки — «Живая жизнь», «Невозвратное» и «Один в поле».
 
 Сценарий: по мотивам романа.
-Графика: Ren'Py GUI и сгенерированные иллюстрации.
+Графика: интерфейс Ren'Py и иллюстрации по портретам романа.
 
 Разработчики: @wherearethechoice, @arekssbit4
 
@@ -200,6 +200,16 @@ init python:
     build.classify('**/.**', None)
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
+
+    ## В готовую сборку игрока попадает только то, что нужно ему: сама игра,
+    ## лицензия и инструкция. Скрипты разработки, кадры для README и файл
+    ## установки остаются в репозитории.
+
+    build.classify('tools/**', None)
+    build.classify('docs/**', None)
+    build.classify('README.md', None)
+    build.classify('*.bat', None)
+    build.classify('project.json', None)
 
     ## Чтобы архивировать файлы, классифицируйте их, например, как 'archive'.
 
